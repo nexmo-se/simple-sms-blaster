@@ -30,7 +30,7 @@ const trackTps = (key) => {
     tracker.lastTps = tracker.trackingTps;
     tracker.trackingTps = 1;
 
-    console.log(`TPS (${key}): ${tracker.lastTps}tps`);
+    console.log(`TPS: ${tracker.lastTps}tps`);
   }
 };
 
