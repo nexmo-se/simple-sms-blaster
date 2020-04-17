@@ -21,7 +21,7 @@ const tracker = {
   trackTime: getTrackTime(),
 };
 
-const trackTps = (key) => {
+const trackTps = () => {
   const trackTime = getTrackTime();
   if (tracker.trackTime === trackTime) {
     tracker.trackingTps += 1;
@@ -43,7 +43,7 @@ const newInstance = (tps) => {
   const minTime = Math.ceil(1000 / tps);
   const bottleneckInstance = new Bottleneck({ minTime, trackDoneStatus: true });
 
-  const originalAxiosInstance = axios.create({ httpAgent, httpsAgent, });
+  const originalAxiosInstance = axios.create({ httpAgent, httpsAgent });
   originalAxiosInstance.interceptors.request.use((req) => {
     const counts = bottleneckInstance.counts();
     console.log('Bottleneck Counts', counts);
