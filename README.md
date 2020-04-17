@@ -15,3 +15,9 @@ Simple API Request based SMS blaster with the use of CSV
 1. CSV Template (`mobile_number,text_body`)
 2. Send the CSV file via `POST` to `{HOST}/upload` with file parameter `file`.
 3. Blaster will start to blast.
+
+### Sample CSV
+```
+6512341234,This is a text
+6556785678,This is another text
+```
