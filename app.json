@@ -1,0 +1,24 @@
+{
+  "name": "Simple SMS Blaster",
+  "description": "A simple SMS blaster",
+  "success_url": "/success",
+  "addons": [],
+  "env": {
+    "API_KEY": {
+      "description": "Nexmo API Key",
+    },
+    "API_SECRET": {
+      "description": "Nexmo API Secret"
+    },
+    "SENDER_ID": {
+      "description": "Sender ID used for sending out SMS"
+    },
+    "TPS": {
+      "description": "Text per second. Rate of sending out SMS Request"
+    },
+    "CSV_SKIP_LINES": {
+      "description": "Number of lines to skip when reading CSV. Useful if there are header lines",
+      "value": "0"
+    }
+  }
+}

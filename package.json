@@ -1,0 +1,45 @@
+{
+  "name": "simple-sms-blaster",
+  "version": "0.0.1",
+  "description": "Simple SMS Blaster",
+  "main": "server.js",
+  "entry": [
+    "regenerator-runtime/runtime",
+    "index.js"
+  ],
+  "scripts": {
+    "start": "NODE_ENV=production node src/server.js",
+    "debug": "nodemon --inspect --exec node src/server.js"
+  },
+  "author": "Yee Hui Poh <yee.poh@vonage.com>",
+  "license": "ISC",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "bottleneck": "^2.19.5",
+    "cors": "^2.8.5",
+    "csv-parse": "^4.8.7",
+    "dotenv": "^8.0.0",
+    "express": "^4.16.4",
+    "helmet": "^3.15.1",
+    "multer": "^1.4.2",
+    "utf8": "^3.0.0",
+    "windows-1252": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "esm": "^3.2.25",
+    "jest": "^24.1.0",
+    "mocha": "^6.0.1",
+    "nodemon": "^1.18.10"
+  }
+}
