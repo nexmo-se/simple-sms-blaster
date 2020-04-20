@@ -91,11 +91,6 @@ app.post('/upload', upload, (req, res) => {
   }));
 });
 
-app.use((err, req, res) => {
-  console.error(err);
-  res.status(500).send();
-});
-
 const httpServer = http.createServer(app);
 
 httpServer.listen(port, () => {
