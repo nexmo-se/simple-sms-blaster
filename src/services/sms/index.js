@@ -29,7 +29,7 @@ const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, axios) => {
     .catch((error) => {
       if (error.response != null && error.response.status === 429) {
         console.log('Too many request (429) detected, put back into queue');
-        return sendSms(from, to, text, apiKey, apiSecret, axios);
+        return sendSms(from, to, text, apiKey, apiSecret, apiUrl, axios);
       }
 
       console.error(error.message);
