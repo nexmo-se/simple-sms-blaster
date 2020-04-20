@@ -45,8 +45,8 @@ const newInstance = (tps) => {
 
   const originalAxiosInstance = axios.create({ httpAgent, httpsAgent });
   originalAxiosInstance.interceptors.request.use((req) => {
-    const counts = bottleneckInstance.counts();
-    console.log('Bottleneck Counts', counts);
+    // const counts = bottleneckInstance.counts();
+    // console.log('Bottleneck Counts', counts);
     trackTps();
     return req;
   });
