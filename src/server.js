@@ -16,6 +16,7 @@ const memoryStorage = multer.memoryStorage();
 const upload = multer({ storage: memoryStorage }).single('file');
 
 const port = process.env.PORT || 8080;
+const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 const apiSecret = process.env.API_SECRET;
 const senderId = process.env.SENDER_ID;
@@ -57,7 +58,7 @@ app.post('/blast', (req, res) => {
     const record = records[i];
     const to = record[0];
     const text = record[1];
-    smsService.sendSms(senderId, to, text, apiKey, apiSecret, rateLimitAxios);
+    smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, rateLimitAxios);
   }
 
   console.log(`Blast Limit: ${limit}, Offset ${offset}`);

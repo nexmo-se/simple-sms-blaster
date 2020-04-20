@@ -13,8 +13,7 @@ const convertToUtf8 = (text) => {
   return decoded;
 };
 
-const sendSms = (from, to, text, apiKey, apiSecret, axios) => {
-  const url = 'https://rest.nexmo.com/sms/json';
+const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, axios) => {
   const sanitizedText = convertToUtf8(text);
   const sanitizedType = isUnicode(sanitizedText) ? 'unicode' : 'text';
   const body = {
@@ -26,15 +25,16 @@ const sendSms = (from, to, text, apiKey, apiSecret, axios) => {
     type: sanitizedType,
   };
 
-  return axios.post(url, body)
+  return axios.post(apiUrl, body)
     .catch((error) => {
       if (error.response != null && error.response.status === 429) {
-          console.log('Too many request (429) detected, put back into queue');
-          return sendSms(from, to, text, apiKey, apiSecret, axios);
-      } else {
-        console.error(error.message);
-        console.error(error);
+        console.log('Too many request (429) detected, put back into queue');
+        return sendSms(from, to, text, apiKey, apiSecret, axios);
       }
+
+      console.error(error.message);
+      console.error(error);
+      return Promise.resolve();
     });
 };
 

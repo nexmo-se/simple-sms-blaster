@@ -4,6 +4,10 @@
   "repository": "https://github.com/nexmo-se/simple-sms-blaster",
   "logo": "https://node-js-sample.herokuapp.com/node.png",
   "env": {
+    "API_URL": {
+      "description": "Nexmo SMS API Endpoint",
+      "value": "https://rest.nexmo.com/sms/json"
+    },
     "API_KEY": {
       "description": "Nexmo API Key",
       "required": true
