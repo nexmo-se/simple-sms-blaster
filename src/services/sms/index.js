@@ -13,7 +13,7 @@ const convertToUtf8 = (text) => {
   return decoded;
 };
 
-const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, axios) => {
+const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, campaignName, axios) => {
   const sanitizedText = convertToUtf8(text);
   const sanitizedType = isUnicode(sanitizedText) ? 'unicode' : 'text';
   const body = {
@@ -23,13 +23,14 @@ const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, axios) => {
     to,
     text: sanitizedText,
     type: sanitizedType,
+    'client-ref': campaignName,
   };
 
   return axios.post(apiUrl, body)
     .catch((error) => {
       if (error.response != null && error.response.status === 429) {
         console.log('Too many request (429) detected, put back into queue');
-        return sendSms(from, to, text, apiKey, apiSecret, apiUrl, axios);
+        return sendSms(from, to, text, apiKey, apiSecret, apiUrl, campaignName, axios);
       }
 
       console.error(error.message);

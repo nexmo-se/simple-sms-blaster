@@ -42,8 +42,12 @@ app.get('/', (_, res) => res.send('Hello world'));
 app.get('/success', (_, res) => res.send('You have successfully deployed the Simple SMS Blaster'));
 
 app.post('/blast', (req, res) => {
-  const { records, offset = 0, limit = tps } = req.body;
-
+  const {
+    campaignName,
+    records,
+    offset = 0,
+    limit = tps,
+  } = req.body;
   res.send('ok');
 
   if (offset > records.length) {
@@ -58,11 +62,12 @@ app.post('/blast', (req, res) => {
     const record = records[i];
     const to = record[0];
     const text = record[1];
-    smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, rateLimitAxios);
+    smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, campaignName, rateLimitAxios);
   }
 
   console.log(`Blast Limit: ${limit}, Offset ${offset}`);
   setTimeout(() => axios.post(`http://localhost:${port}/blast`, {
+    campaignName,
     records,
     offset: offset + limit,
     limit,
@@ -73,6 +78,13 @@ app.post('/blast', (req, res) => {
 });
 
 app.post('/upload', upload, (req, res) => {
+  // Campaign name
+  let campaignName = req.file.originalname;
+  if (campaignName.toLowerCase().lastIndexOf('.csv') === campaignName.length - 4) {
+    campaignName = campaignName.slice(0, campaignName.length - 4);
+  }
+  console.log(`Campaign Name: ${campaignName}`);
+
   // Data will be in req.file.buffer
   const dataBuffer = req.file.buffer;
   const dataString = dataBuffer.toString('utf8');
@@ -82,6 +94,7 @@ app.post('/upload', upload, (req, res) => {
   const options = { from_line: csvFromLine };
   const recordList = csvService.fromCsvSync(dataString, options);
   setImmediate(() => axios.post(`http://localhost:${port}/blast`, {
+    campaignName,
     records: recordList,
     offset: 0,
     limit: tps,
