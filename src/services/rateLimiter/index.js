@@ -37,6 +37,8 @@ const trackTps = () => {
 const newInstance = (tps) => {
   const httpAgent = new http.Agent({ keepAlive: true });
   const httpsAgent = new https.Agent({ keepAlive: true });
+
+  // Set Rate
   const config = { maxRequests: tps, perMilliseconds: 1000 };
   console.log('Creating new Bottleneck instance (Axios)', config);
 
@@ -45,8 +47,6 @@ const newInstance = (tps) => {
 
   const originalAxiosInstance = axios.create({ httpAgent, httpsAgent });
   originalAxiosInstance.interceptors.request.use((req) => {
-    // const counts = bottleneckInstance.counts();
-    // console.log('Bottleneck Counts', counts);
     trackTps();
     return req;
   });

@@ -23,6 +23,7 @@ const senderId = process.env.SENDER_ID;
 const tps = parseInt(process.env.TPS || '40', 10);
 const csvFromLine = parseInt(process.env.CSV_SKIP_LINES || '0', 10) + 1;
 
+console.log(`Will start reading CSV from row ${csvFromLine}`);
 const rateLimitAxios = rateLimiterService.newInstance(tps);
 
 
@@ -41,6 +42,7 @@ app.use(bodyParser.json({ limit: requestMaxSize }));
 app.get('/', (_, res) => res.send('Hello world'));
 app.get('/success', (_, res) => res.send('You have successfully deployed the Simple SMS Blaster'));
 
+// For Internal Use, called by Upload
 app.post('/blast', (req, res) => {
   const {
     campaignName,
@@ -58,10 +60,13 @@ app.post('/blast', (req, res) => {
 
   const end = Math.min(offset + limit, records.length);
   for (let i = offset; i < end; i += 1) {
-    // Add to queue
+    // Parse CSV Columns
+    // This is where you can modify the CSV structure
     const record = records[i];
     const to = record[0];
     const text = record[1];
+
+    // Add to queue
     smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, campaignName, rateLimitAxios);
   }
 
@@ -77,8 +82,9 @@ app.post('/blast', (req, res) => {
   }), 1000);
 });
 
+// For User use, for uploading CSV
 app.post('/upload', upload, (req, res) => {
-  // Campaign name
+  // Use file name as ampaign name
   let campaignName = req.file.originalname;
   if (campaignName.toLowerCase().lastIndexOf('.csv') === campaignName.length - 4) {
     campaignName = campaignName.slice(0, campaignName.length - 4);
@@ -89,10 +95,14 @@ app.post('/upload', upload, (req, res) => {
   const dataBuffer = req.file.buffer;
   const dataString = dataBuffer.toString('utf8');
 
+  // Return response
   res.send('ok');
 
+  // Parse CSV into Array
   const options = { from_line: csvFromLine };
   const recordList = csvService.fromCsvSync(dataString, options);
+
+  // Start blasting
   setImmediate(() => axios.post(`http://localhost:${port}/blast`, {
     campaignName,
     records: recordList,
@@ -104,8 +114,8 @@ app.post('/upload', upload, (req, res) => {
   }));
 });
 
+// Create Application HTTP Server
 const httpServer = http.createServer(app);
-
 httpServer.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
