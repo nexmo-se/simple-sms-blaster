@@ -82,6 +82,30 @@ app.post('/blast', (req, res) => {
   }), 1000);
 });
 
+app.post('/send', async (req, res) => {
+  try {
+    const { campaign = 'campaign', records = [] } = req.body;
+    const promises = records.map(async (record) => {
+      try {
+        // Get Record Parameters
+        const { to, text } = record;
+    
+        // Add to queue
+        const result = await smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, campaign, rateLimitAxios);
+        return Promise.resolve(Object.assign({}, result, { to, text }));
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    });
+
+    const results = await Promise.all(promises);
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+});
+
 // For User use, for uploading CSV
 app.post('/upload', upload, (req, res) => {
   // Use file name as ampaign name

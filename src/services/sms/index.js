@@ -17,6 +17,10 @@ const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, campaignName, axios)
   };
 
   return axios.post(apiUrl, body)
+    .then((response) => {
+      const { data } = response;
+      return Promise.resolve(data);
+    })
     .catch((error) => {
       // Check for 429: Too Many Requests
       if (error.response != null && error.response.status === 429) {
@@ -28,7 +32,7 @@ const sendSms = (from, to, text, apiKey, apiSecret, apiUrl, campaignName, axios)
 
       console.error(error.message);
       console.error(error);
-      return Promise.resolve();
+      return Promise.reject(error);
     });
 };
 

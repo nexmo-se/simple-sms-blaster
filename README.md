@@ -11,7 +11,58 @@ Simple API Request based SMS blaster with the use of CSV
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nexmo-se/simple-sms-blaster)
 
 
-### Using the application
+### Using the application (JSON)
+You can directly send a batch SMS request. However, do take note of the request timeout period imposed by your PaaS provider or server framework and adjust the number of records per request accordingly.
+
+#### Request
+```
+POST /send
+
+body:
+{
+  "campaign": STRING - a name that will be used for client-ref
+  "records": [
+    {
+      "to": STRING - recipient mobile number,
+      "text": STRING - SMS text,
+    },
+    {
+      "to": STRING - recipient mobile number,
+      "text": STRING - SMS text,
+    },
+
+    ...
+
+  ]
+}
+```
+
+#### Response
+```
+[
+  {
+    "message-count": STRING - see Vonage SMS Documentation,
+    "messages": [
+      {
+        "to": STRING - see Vonage SMS Documentation,
+        "message-id": STRING - see Vonage SMS Documentation,
+        "status": STRING - see Vonage SMS Documentation,
+        "remaining-balance": STRING - see Vonage SMS Documentation,
+        "message-price": STRING - see Vonage SMS Documentation,
+        "network": STRING - see Vonage SMS Documentation,
+      },
+
+      ...
+
+    ],
+    "to": STRING - recipient mobile number,
+    "text": STRING - SMS text,
+  }
+]
+```
+
+
+### Using the application (CSV)
 1. CSV Template (`mobile_number,text_body`)
 2. Send the CSV file via `POST` to `{HOST}/upload` with file parameter `file`.
 3. Blaster will start to blast.
