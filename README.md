@@ -41,15 +41,15 @@ body:
 ```
 [
   {
-    "message-count": STRING - see Vonage SMS Documentation,
+    "message-count": STRING - see Vonage SMS API Documentation,
     "messages": [
       {
-        "to": STRING - see Vonage SMS Documentation,
-        "message-id": STRING - see Vonage SMS Documentation,
-        "status": STRING - see Vonage SMS Documentation,
-        "remaining-balance": STRING - see Vonage SMS Documentation,
-        "message-price": STRING - see Vonage SMS Documentation,
-        "network": STRING - see Vonage SMS Documentation,
+        "to": STRING - see Vonage SMS API Documentation,
+        "message-id": STRING - see Vonage SMS API Documentation,
+        "status": STRING - see Vonage SMS API Documentation,
+        "remaining-balance": STRING - see Vonage SMS API Documentation,
+        "message-price": STRING - see Vonage SMS API Documentation,
+        "network": STRING - see Vonage SMS API Documentation,
       },
 
       ...
@@ -60,6 +60,8 @@ body:
   }
 ]
 ```
+
+Vonage SMS API Documentation: https://developer.nexmo.com/api/sms?theme=dark#send-an-sms
 
 #### Example
 ![Example](https://github.com/nexmo-se/simple-sms-blaster/blob/master/images/postman.png?raw=true)
