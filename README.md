@@ -61,6 +61,9 @@ body:
 ]
 ```
 
+#### Example
+![Example](https://github.com/nexmo-se/simple-sms-blaster/blob/master/images/postman.png?raw=true)
+
 
 ### Using the application (CSV)
 1. CSV Template (`mobile_number,text_body`)
