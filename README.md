@@ -67,7 +67,7 @@ body:
 Vonage SMS API Documentation: https://developer.nexmo.com/api/sms?theme=dark#send-an-sms
 
 #### Example
-![Example](https://github.com/nexmo-se/simple-sms-blaster/blob/master/images/postman.png?raw=true)
+![Example](https://github.com/nexmo-se/simple-sms-blaster/blob/master/images/sms-blaster.png?raw=true)
 
 
 ### Using the application (CSV)
