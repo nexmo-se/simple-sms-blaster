@@ -23,10 +23,12 @@ body:
   "campaign": STRING - a name that will be used for client-ref
   "records": [
     {
+      "uuid": STRING - identifier,
       "to": STRING - recipient mobile number,
       "text": STRING - SMS text,
     },
     {
+      "uuid": STRING - identifier,
       "to": STRING - recipient mobile number,
       "text": STRING - SMS text,
     },
@@ -55,6 +57,7 @@ body:
       ...
 
     ],
+    "uuid": STRING - identifier,
     "to": STRING - recipient mobile number,
     "text": STRING - SMS text,
   }

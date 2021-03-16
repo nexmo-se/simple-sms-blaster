@@ -88,11 +88,11 @@ app.post('/send', async (req, res) => {
     const promises = records.map(async (record) => {
       try {
         // Get Record Parameters
-        const { to, text } = record;
+        const { uuid, to, text } = record;
     
         // Add to queue
         const result = await smsService.sendSms(senderId, to, text, apiKey, apiSecret, apiUrl, campaign, rateLimitAxios);
-        return Promise.resolve(Object.assign({}, result, { to, text }));
+        return Promise.resolve(Object.assign({}, result, { uuid, to, text }));
       } catch (error) {
         return Promise.reject(error);
       }
